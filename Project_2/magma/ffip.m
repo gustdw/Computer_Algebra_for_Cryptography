@@ -1,5 +1,12 @@
+// Remember whether a caller asked us to stay quiet (load_only already set).
+// We must set load_only for field_iso.m's own guard, then restore the
+// caller's intent so that running ffip.m directly still executes its tests.
+caller_load_only := assigned load_only;
 load_only := true;
 load "field_iso.m";
+if not caller_load_only then
+    delete load_only;
+end if;
 
 // Task 2.a
 SampleChi := function(n, alpha, beta)
@@ -55,6 +62,10 @@ FFIPDecrypt := function(c, f, t)
 end function;
 
 // Tests
+//   use elsewhere :  load_only := true;  load "ffip.m";
+//   run directly  :  magma ffip.m
+if not assigned load_only then
+
 p := 13; n := 64; alpha := -1; beta := 1;
 f, g, s, t := FFIPKeyGen(p, n, alpha, beta);
 
@@ -67,3 +78,5 @@ md := FFIPDecrypt(c, f, t);
 printf "decrypted == original : %o\n", md eq m;
 
 quit;
+
+end if;
