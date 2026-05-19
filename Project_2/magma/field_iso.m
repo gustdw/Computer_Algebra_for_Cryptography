@@ -64,8 +64,6 @@ InverseFieldIsomorphism := function(f, g, s)
 end function;
 
 // Tests
-//   use elsewhere :  load_only := true;  load "field_iso.m";
-//   run directly  :  magma field_iso.m
 if not assigned load_only then
 
 print "=== small correctness test (p = 13, n = 8) ===";

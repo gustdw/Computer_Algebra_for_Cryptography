@@ -1,13 +1,3 @@
-// Remember whether a caller asked us to stay quiet (load_only already set).
-// We must set load_only for field_iso.m's own guard, then restore the
-// caller's intent so that running ffip.m directly still executes its tests.
-caller_load_only := assigned load_only;
-load_only := true;
-load "field_iso.m";
-if not caller_load_only then
-    delete load_only;
-end if;
-
 // Task 2.a
 SampleChi := function(n, alpha, beta)
     return [ Random(alpha, beta) : i in [1..n] ];
